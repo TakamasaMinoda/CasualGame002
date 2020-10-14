@@ -12,10 +12,5 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector2 direction = Vector2.up * variableJoystick.Vertical + Vector2.right * variableJoystick.Horizontal;
 		rb.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode2D.Force);
-
-		//if(Input.GetMouseButtonDown(0))
-		//{
-		//	rb.AddForce(Vector2.up * speed * Time.fixedDeltaTime, ForceMode2D.Force);
-		//}
 	}
 }
