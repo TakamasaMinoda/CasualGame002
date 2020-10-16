@@ -24,6 +24,9 @@ public class StarCon : MonoBehaviour
 		{
 			ChildCount++;
 		}
+
+		//自壊用(もう少し機能性があるプログラム組めたらいいな)
+		Destroy(this.gameObject,10);
 	}
 
 	void Update()
@@ -34,12 +37,7 @@ public class StarCon : MonoBehaviour
 			g_ScoreCS.AddScore(1000);
 			Destroy(this.gameObject);
 		}
-
-		transform.Translate(0.0f, -speed * Time.deltaTime, 0.0f);
-		if(transform.position.y<-6)
-		{
-			Destroy(this.gameObject);
-		}
+		
 	}
 
 	/// <summary>

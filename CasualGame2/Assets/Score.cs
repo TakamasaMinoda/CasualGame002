@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
     void Awake()
     {
 		TextCS = GetComponent<Text>();
-		TextCS.text= g_score.ToString();
+		TextCS.text= "スコア:"+g_score.ToString();
 	}
 
 	/// <summary>
@@ -22,6 +22,6 @@ public class Score : MonoBehaviour
 	public void AddScore(int ten)
 	{
 		g_score += ten;
-		TextCS.text = g_score.ToString();
+		TextCS.text = "スコア:" + g_score.ToString();
 	}
 }
