@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Gage : MonoBehaviour
 {
-	[SerializeField, Header("クリアの距離")] int GoalDis;
-	[SerializeField, Header("今の距離")] float NowDis;
-	[SerializeField, Header("プレイヤー")] GameObject PlayerObj;
+	[SerializeField, Header("クリアの距離")] int GoalDis=0;
+	[SerializeField, Header("今の距離")] float NowDis=0;
+	[SerializeField, Header("プレイヤー")] GameObject PlayerObj=null;
 
 	Image ImageCS;
 
-	void Start()
+	void Awake()
 	{
 		ImageCS = GetComponent<Image>();
 		ImageCS.fillAmount = 0;
@@ -31,12 +31,14 @@ public class Gage : MonoBehaviour
 			else
 			{
 				//クリア
+				Debug.Log("クリア");
 			}
 
 		}
 		else
 		{
 			//ゲームオーバー
+			Debug.Log("ゲームオーバー");
 		}
 		
 	}

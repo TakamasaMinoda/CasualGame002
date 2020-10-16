@@ -5,20 +5,25 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField, Header("タッチした座標方向")] private Vector3 touchStartPos;
-	[SerializeField, Header("タッチを離した座標方向")] private Vector3 touchEndPos;
+	[SerializeField, Header("タッチした座標方向")] private Vector3 touchStartPos = new Vector3(0, 0, 0);
+	[SerializeField, Header("タッチを離した座標方向")] private Vector3 touchEndPos = new Vector3(0, 0, 0);
 	private float NextPos = 0;
 
 	[SerializeField, Header("フリックした方向")] private string Direction="None";
 	[SerializeField, Header("プレイヤーの状態")] private string PlayerStatus = "None";
 
-	[SerializeField, Header("フリックした方向のX量")] float directionX;
-	[SerializeField, Header("フリックした方向のY量")] float directionY;
+	[SerializeField, Header("フリックした方向のX量")] float directionX=0;
+	[SerializeField, Header("フリックした方向のY量")] float directionY=0;
+
+	//エフェクト追加
+	[SerializeField, Header("エフェクトオブジェクト")] private GameObject g_EffectObj=null;
+	[SerializeField, Header("スクリーン上の現在位置座標")] private Vector3 touchNowPos=new Vector3(0,0,0);
 
 	private void Start()
 	{
 		Direction = "None";
 		PlayerStatus = "None";
+		g_EffectObj.SetActive(false);
 	}
 
 	void Flick()
@@ -28,6 +33,16 @@ public class PlayerController : MonoBehaviour
 			touchStartPos = new Vector3(Input.mousePosition.x,
 										Input.mousePosition.y,
 										Input.mousePosition.z);
+			g_EffectObj.SetActive(true);
+		}
+
+		if (Input.GetKey(KeyCode.Mouse0))
+		{
+			//エフェクトをカーソルの位置に出す
+			Vector3 position = Input.mousePosition;
+			position.z = 10f;
+			touchNowPos = Camera.main.ScreenToWorldPoint(position);
+			g_EffectObj.transform.position = touchNowPos;
 		}
 
 		if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -36,6 +51,7 @@ public class PlayerController : MonoBehaviour
 									  Input.mousePosition.y,
 									  Input.mousePosition.z);
 			GetDirection();
+			g_EffectObj.SetActive(false);
 		}
 	}
 
@@ -72,7 +88,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		Flick();
 
@@ -149,7 +165,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		if(collision.gameObject.CompareTag("Block"))
+		if(collision.gameObject.CompareTag("JumpObj"))
 		{
 			if(PlayerStatus != "Jump")
 			{
@@ -163,6 +179,13 @@ public class PlayerController : MonoBehaviour
 			{
 				this.gameObject.SetActive(false);
 			}
+		}
+
+		if (collision.gameObject.CompareTag("Block"))
+		{
+
+			this.gameObject.SetActive(false);
+
 		}
 	}
 }

@@ -5,32 +5,30 @@ using DG.Tweening;
 
 public class Hand : MonoBehaviour
 {
-	[SerializeField, Header("星の動く速さ")] float speed;
-	[SerializeField, Header("手を出す方向")] float g_DirX;
-
-	public void SetDirX(float _DirX)
-	{
-		g_DirX = _DirX;
-	}
+	[SerializeField, Header("星の動く速さ")] float speed=0;
+	[SerializeField, Header("手を出す方向")] float g_DirX = 0;
 
 	private void Start()
 	{
-		transform.Rotate(0, 0, 90* g_DirX);
-
-		transform.DOMoveX(2 * g_DirX, 2);
+		transform.DOMoveX(1*g_DirX, 2);
 	}
 
 	// Start is called before the first frame update
 	void Update()
 	{
-		transform.Translate(g_DirX*speed * Time.deltaTime,0, 0.0f);
-	}
+		transform.Translate(0, -speed * Time.deltaTime, 0.0f, Space.World);
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.gameObject.CompareTag("DeadZone"))
+		//画面外に出たら削除
+		if (transform.position.y < -6)
 		{
-			Destroy(this.gameObject);
+			if (this.transform.parent)
+			{
+				Destroy(this.transform.parent.gameObject);
+			}
+			else
+			{
+				Destroy(this.gameObject);
+			}
 		}
 	}
 }

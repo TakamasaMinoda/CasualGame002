@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
-	[SerializeField, Header("星の動く速さ")] float speed;
+	[SerializeField, Header("星の動く速さ")] float speed=0;
 
 	// Update is called once per frame
 	void Update()
