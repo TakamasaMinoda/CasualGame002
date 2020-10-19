@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class StarCon : MonoBehaviour
 {
-	[SerializeField, Header("星の動く速さ")] float speed = 0;
-
+	[SerializeField, Header("星の動く速さ")] float speed;
 	[SerializeField, Header("星の数")] int ChildCount = 0;
-	[SerializeField, Header("完璧テキストオブジェクト")] GameObject g_CompleteObj;
-
-	[SerializeField, Header("スコアオブジェクト")] GameObject g_ScoreObj = null;
+	[SerializeField, Header("星取得失敗数")] int FailedCount = 0;
+	[SerializeField, Header("完璧テキストオブジェクト")] RatingText g_RatingCS;
 	[SerializeField, Header("スコアプログラム")] Score g_ScoreCS = null;
 
 	private void Awake()
 	{
-		g_ScoreObj = GameObject.Find("ScoreText");
+		GameObject g_ScoreObj = GameObject.Find("ScoreText");
 		g_ScoreCS = g_ScoreObj.GetComponent<Score>();
+
+		GameObject g_CompleteObj = GameObject.Find("RatingText");
+		g_RatingCS = g_CompleteObj.GetComponent<RatingText>();
 	}
 
 	void Start()
@@ -24,17 +25,19 @@ public class StarCon : MonoBehaviour
 		{
 			ChildCount++;
 		}
-
-		//自壊用(もう少し機能性があるプログラム組めたらいいな)
-		Destroy(this.gameObject,10);
 	}
 
 	void Update()
 	{
 		//星をすべて取れた
-		if (ChildCount<=0)
+		if (FailedCount == 0&& ChildCount==0)
 		{
 			g_ScoreCS.AddScore(1000);
+			g_RatingCS.ActiveText();
+			Destroy(this.gameObject);
+		}
+		else if(ChildCount == 0)
+		{
 			Destroy(this.gameObject);
 		}
 		
@@ -43,9 +46,19 @@ public class StarCon : MonoBehaviour
 	/// <summary>
 	/// 星を取れた数を数え、スコアを加算する
 	/// </summary>
-	public void SubChildCount()
+	public void Success()
 	{
 		ChildCount--;
 		g_ScoreCS.AddScore(100);
 	}
+
+	/// <summary>
+	/// 失敗した場合
+	/// </summary>
+	public void Failed()
+	{
+		ChildCount--;
+		FailedCount++;
+	}
+
 }

@@ -39,7 +39,6 @@ public class TutorialFactory : MonoBehaviour
 		if(cnt < EventTirgger.Count)
 		{
 			GameObject temp = Instantiate(TutorialObj[cnt], this.transform.position, Quaternion.identity);
-			Debug.Log(cnt);
 			TutorialTextCS.SetText(cnt);
 
 			//EventTirgger[i]がtrueになるまでループする

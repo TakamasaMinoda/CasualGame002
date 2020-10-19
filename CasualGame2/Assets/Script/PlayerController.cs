@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
 	void Flick()
 	{
-		if (Input.GetKeyDown(KeyCode.Mouse0))
+		if (Input.GetMouseButtonDown(0))
 		{
 			touchStartPos = new Vector3(Input.mousePosition.x,
 										Input.mousePosition.y,
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
 			g_EffectObj.SetActive(true);
 		}
 
-		if (Input.GetKey(KeyCode.Mouse0))
+		if (Input.GetMouseButton(0))
 		{
 			//エフェクトをカーソルの位置に出す
 			Vector3 position = Input.mousePosition;
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
 			g_EffectObj.transform.position = touchNowPos;
 		}
 
-		if (Input.GetKeyUp(KeyCode.Mouse0))
+		if (Input.GetMouseButtonUp(0))
 		{
 			touchEndPos = new Vector3(Input.mousePosition.x,
 									  Input.mousePosition.y,
@@ -92,75 +93,77 @@ public class PlayerController : MonoBehaviour
 	{
 		Flick();
 
-		
-		switch (Direction)
+		if (SceneManager.GetActiveScene().name == "Main")
 		{
-			case "up":
-				if (PlayerStatus =="None")
-				{
-					Sequence JumpAnim = DOTween.Sequence()
-					.OnStart(() => PlayerStatus = "Jump")
-					.Append(transform.DOScale(new Vector3(2.0f, 2.0f, 1), 1.0f))
-					.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
-					.OnComplete(() => PlayerStatus = "None")
-					;
-				}
-
-				break;
-
-			case "down":
-				//下フリックされた時の処理
-				if(PlayerStatus == "None")
-				{
-					Sequence SlidingAnim = DOTween.Sequence()
-					.OnStart(() => PlayerStatus = "Sliding")
-					.Append(transform.DOScale(new Vector3(0.3f, 0.3f, 1), 1.0f))
-					.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
-					.OnComplete(() => PlayerStatus = "None")
-					;
-				}
-				
-				break;
-
-			case "right":
-				//右フリックされた時の処理
-				if (PlayerStatus == "None")
-				{
-					NextPos = this.transform.position.x + 1.9f;
-					if (NextPos > 2)
+			switch (Direction)
+			{
+				case "up":
+					if (PlayerStatus == "None")
 					{
-						return;
+						Sequence JumpAnim = DOTween.Sequence()
+						.OnStart(() => PlayerStatus = "Jump")
+						.Append(transform.DOScale(new Vector3(1.25f, 1.25f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
+						.OnComplete(() => PlayerStatus = "None")
+						;
 					}
 
-					//次の座標へ移動する
-					Sequence RightMoveAnim = DOTween.Sequence()
-					.OnStart(() => PlayerStatus = "Move")
-					.Append(transform.DOMoveX(NextPos, 1))
-					.OnComplete(() => PlayerStatus = "None")
-					;
-				}
-				break;
+					break;
 
-			case "left":
-				//左フリックされた時の処理
-				if (PlayerStatus == "None")
-				{
-					NextPos = this.transform.position.x - 1.9f;
-					if (NextPos < -2)
+				case "down":
+					//下フリックされた時の処理
+					if (PlayerStatus == "None")
 					{
-						return;
+						Sequence SlidingAnim = DOTween.Sequence()
+						.OnStart(() => PlayerStatus = "Sliding")
+						.Append(transform.DOScale(new Vector3(0.75f, 0.75f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
+						.OnComplete(() => PlayerStatus = "None")
+						;
 					}
-					//次の座標へ移動する
-					Sequence LeftMoveAnim = DOTween.Sequence()
-					.OnStart(() => PlayerStatus = "Move")
-					.Append(transform.DOMoveX(NextPos, 1))
-					.OnComplete(() => PlayerStatus = "None")
-					;
-				}
-				break;
+
+					break;
+
+				case "right":
+					//右フリックされた時の処理
+					if (PlayerStatus == "None")
+					{
+						NextPos = this.transform.position.x + 1.9f;
+						if (NextPos > 2)
+						{
+							return;
+						}
+
+						//次の座標へ移動する
+						Sequence RightMoveAnim = DOTween.Sequence()
+						.OnStart(() => PlayerStatus = "Move")
+						.Append(transform.DOMoveX(NextPos, 1))
+						.OnComplete(() => PlayerStatus = "None")
+						;
+					}
+					break;
+
+				case "left":
+					//左フリックされた時の処理
+					if (PlayerStatus == "None")
+					{
+						NextPos = this.transform.position.x - 1.9f;
+						if (NextPos < -2)
+						{
+							return;
+						}
+						//次の座標へ移動する
+						Sequence LeftMoveAnim = DOTween.Sequence()
+						.OnStart(() => PlayerStatus = "Move")
+						.Append(transform.DOMoveX(NextPos, 1))
+						.OnComplete(() => PlayerStatus = "None")
+						;
+					}
+					break;
+			}
+
+			Direction = "None";
 		}
-
-		Direction = "None";
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
 		{
 			if(PlayerStatus != "Jump")
 			{
-				this.gameObject.SetActive(false);
+				Death();
 			}
 		}
 
@@ -177,15 +180,23 @@ public class PlayerController : MonoBehaviour
 		{
 			if (PlayerStatus != "Sliding")
 			{
-				this.gameObject.SetActive(false);
+				Death();
 			}
 		}
 
 		if (collision.gameObject.CompareTag("Block"))
 		{
 
-			this.gameObject.SetActive(false);
+			Death();
 
 		}
+	}
+
+	void Death()
+	{
+		Sequence sequence = DOTween.Sequence()
+						  .Append(transform.DOScale(new Vector3(0.1f, 0.1f, 1), 2.0f))
+						  .Join(transform.DOLocalRotate(new Vector3(0, 0, 360), 2.0f, RotateMode.FastBeyond360))
+						  .OnComplete(() => gameObject.SetActive(false));
 	}
 }

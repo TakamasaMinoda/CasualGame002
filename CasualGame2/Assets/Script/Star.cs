@@ -8,7 +8,7 @@ public class Star : MonoBehaviour
 
 	[SerializeField, Header("親オブジェクト")] GameObject g_ParentObj=null;
 	[SerializeField, Header("星の親プログラム")] StarCon g_StarConCS = null;
-	
+
 	private void Awake()
 	{
 		g_ParentObj = transform.parent.gameObject;
@@ -18,19 +18,19 @@ public class Star : MonoBehaviour
 	private void Update()
 	{
 		transform.Translate(0.0f, -speed * Time.deltaTime, 0.0f);
-
-		//画面外に出たら削除
-		if(transform.position.y<-6)
-		{
-			Destroy(this.gameObject);
-		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			g_StarConCS.SubChildCount();
+			g_StarConCS.Success();
+			Destroy(this.gameObject);
+		}
+
+		if(collision.gameObject.CompareTag("DeadZone"))
+		{
+			g_StarConCS.Failed();
 			Destroy(this.gameObject);
 		}
 	}
