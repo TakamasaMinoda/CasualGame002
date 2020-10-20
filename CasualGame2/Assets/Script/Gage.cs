@@ -48,16 +48,47 @@ public class Gage : MonoBehaviour
 			}
 			else  //クリア
 			{
-				
+
+				UnInit();
+
 				ResultObj.SetActive(true);
 				MainObj.SetActive(false);
 			}
 		}
 		else //ゲームオーバー
 		{
+			UnInit();
+
 			GameOverObj.SetActive(true);
 			MainObj.SetActive(false);
 		}
 		
+	}
+
+	void UnInit()
+	{
+		GameObject[] Gomi = GameObject.FindGameObjectsWithTag("JumpObj");
+		foreach (GameObject gomi in Gomi)
+		{
+			Destroy(gomi);
+		}
+
+		Gomi = GameObject.FindGameObjectsWithTag("SlidingObj");
+		foreach (GameObject gomi in Gomi)
+		{
+			Destroy(gomi);
+		}
+
+		Gomi = GameObject.FindGameObjectsWithTag("Block");
+		foreach (GameObject gomi in Gomi)
+		{
+			Destroy(gomi);
+		}
+
+		Gomi = GameObject.FindGameObjectsWithTag("Star");
+		foreach (GameObject gomi in Gomi)
+		{
+			Destroy(gomi);
+		}
 	}
 }

@@ -7,6 +7,6 @@ public class OnClick : MonoBehaviour
 {
 	public void OnReStart()
 	{
-		SceneManager.LoadScene("SampleScene");
+		SceneManager.LoadScene("Main");
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Star : MonoBehaviour
 {
@@ -24,8 +25,7 @@ public class Star : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			g_StarConCS.Success();
-			Destroy(this.gameObject);
+			GetAnimation();
 		}
 
 		if(collision.gameObject.CompareTag("DeadZone"))
@@ -33,5 +33,17 @@ public class Star : MonoBehaviour
 			g_StarConCS.Failed();
 			Destroy(this.gameObject);
 		}
+	}
+
+	void GetAnimation()
+	{
+		Sequence GetStar = DOTween.Sequence()
+					.Append(transform.DOScale(new Vector3(0.1f, 0.1f, 1), 1.0f))
+					.Join(transform.DOMove(new Vector3(-3.5f, 7.5f, 0), 1))
+					.OnComplete(() =>
+					{
+						g_StarConCS.Success();
+						Destroy(this.gameObject);
+					});
 	}
 }

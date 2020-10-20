@@ -26,6 +26,12 @@ public class TutorialFactory : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		if(PlayerPrefs.GetString("Tutorial")=="End")
+		{
+			ResultObj.SetActive(false);
+			MainObj.SetActive(true);
+		}
+
 		StartCoroutine("EventPlay");
 	}
 
@@ -71,6 +77,7 @@ public class TutorialFactory : MonoBehaviour
 
 		TutorialTextCS.SetEndText();
 		yield return new WaitForSeconds(2);
+		PlayerPrefs.SetString("Tutorial", "End");
 		ResultObj.SetActive(false);
 		MainObj.SetActive(true);
 	}
