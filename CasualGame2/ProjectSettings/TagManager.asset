@@ -9,6 +9,7 @@ TagManager:
   - SlidingObj
   - DeadZone
   - JumpObj
+  - Through
   layers:
   - Default
   - TransparentFX

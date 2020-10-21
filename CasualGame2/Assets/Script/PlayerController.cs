@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField, Header("演出エフェクト")] GameObject g_GoodEffectObj;
 
+	//数字オブジェクト
+	[SerializeField, Header("NumCon")] NumCon g_NumConCS;
+
 	bool tutorialPlayed=false;
 
 	private void Start()
@@ -168,9 +171,16 @@ public class PlayerController : MonoBehaviour
 
 						//次の座標へ移動する
 						Sequence RightMoveAnim = DOTween.Sequence()
-						.OnStart(() => PlayerStatus = "Move")
+						.OnStart(() => {
+							PlayerStatus = "Move";
+							//Debug.Log("移動");
+						})
 						.Append(transform.DOMoveX(NextPos, 1))
-						.OnComplete(() => PlayerStatus = "None")
+						.OnComplete(() => {
+							if (PlayerStatus != "Damaged")
+								PlayerStatus = "None";
+							//Debug.Log("移動終了");
+						})
 						;
 					}
 					break;
@@ -186,9 +196,18 @@ public class PlayerController : MonoBehaviour
 						}
 						//次の座標へ移動する
 						Sequence LeftMoveAnim = DOTween.Sequence()
-						.OnStart(() => PlayerStatus = "Move")
+						.OnStart(() =>
+						{
+							PlayerStatus = "Move";
+							//Debug.Log("移動");
+						})
 						.Append(transform.DOMoveX(NextPos, 1))
-						.OnComplete(() => PlayerStatus = "None")
+						.OnComplete(() =>
+						{
+							if(PlayerStatus!="Damaged")
+								PlayerStatus = "None";
+							//Debug.Log("移動終了");
+						})
 						;
 					}
 					break;
@@ -208,9 +227,10 @@ public class PlayerController : MonoBehaviour
 			}
 			if(PlayerStatus == "Jump" && PlayerStatus != "Damaged")
 			{
-				//アクロバットポイント
+				//アクロバットポイント //数字生成プログラム
 				g_ScoreCS.AddScore(2000);
-				StartCoroutine("SetGoodEffect");
+				g_NumConCS.Init(2000,gameObject.transform.position);
+				//StartCoroutine("SetGoodEffect");
 			}
 		}
 
@@ -223,9 +243,10 @@ public class PlayerController : MonoBehaviour
 
 			if (PlayerStatus == "Sliding" && PlayerStatus != "Damaged")
 			{
-				//アクロバットポイント
+				//アクロバットポイント //数字生成プログラム
 				g_ScoreCS.AddScore(2000);
-				StartCoroutine("SetGoodEffect");
+				g_NumConCS.Init(2000, gameObject.transform.position);
+				//StartCoroutine("SetGoodEffect");
 			}
 		}
 
@@ -237,6 +258,19 @@ public class PlayerController : MonoBehaviour
 			}
 
 		}
+
+		//とおりぬけたとき
+		if (collision.gameObject.CompareTag("Through"))
+		{
+			//アクロバットポイント
+			g_ScoreCS.AddScore(300);
+			g_NumConCS.Init(300, gameObject.transform.position);
+		}
+
+		if (collision.gameObject.CompareTag("Star"))
+		{
+			g_NumConCS.Init(500, gameObject.transform.position);
+		}
 	}
 
 	void Damaged()
@@ -247,14 +281,16 @@ public class PlayerController : MonoBehaviour
 						.OnStart(() =>
 						{
 							PlayerStatus = "Damaged";
+							//Debug.Log("ダメージ");
 							g_AfterCS.SetActive(false);
 						})
 						.Append(transform.DOMoveY(NextPos, 1.5f))
-						.Join(DOTween.ToAlpha(() => g_SpriteSrc.color, color => g_SpriteSrc.color = color, 0, 0.5f).SetLoops(4, LoopType.Yoyo))
+						.Join(DOTween.ToAlpha(() => g_SpriteSrc.color, color => g_SpriteSrc.color = color, 0, 0.75f).SetLoops(4, LoopType.Yoyo))
 						.OnComplete(() =>
 						{
-							PlayerStatus = "None";
 							g_SpriteSrc.color = new Color(1, 1, 1, 1);
+							PlayerStatus = "None";
+							//Debug.Log("ダメージ終了");
 							g_AfterCS.SetActive(true);
 						});
 	}

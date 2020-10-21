@@ -32,7 +32,7 @@ public class StarCon : MonoBehaviour
 		//星をすべて取れた
 		if (FailedCount == 0&& ChildCount==0)
 		{
-			g_ScoreCS.AddScore(1000);
+			g_ScoreCS.AddScore(5000);
 			g_RatingCS.ActiveText();
 			Destroy(this.gameObject);
 		}
@@ -49,7 +49,7 @@ public class StarCon : MonoBehaviour
 	public void Success()
 	{
 		ChildCount--;
-		g_ScoreCS.AddScore(100);
+		g_ScoreCS.AddScore(500);
 	}
 
 	/// <summary>

@@ -31,8 +31,14 @@ public class TutorialFactory : MonoBehaviour
 			ResultObj.SetActive(false);
 			MainObj.SetActive(true);
 		}
+		else
+		{
+			//プレイヤーをチュートリアル用座標に戻す
+			PlayerObj.transform.position = new Vector3(0,-3.0f,0);
 
-		StartCoroutine("EventPlay");
+			StartCoroutine("EventPlay");
+		}
+		
 	}
 
 	/// <summary>
@@ -77,8 +83,10 @@ public class TutorialFactory : MonoBehaviour
 
 		TutorialTextCS.SetEndText();
 		yield return new WaitForSeconds(2);
-		PlayerPrefs.SetString("Tutorial", "End");
+		//PlayerPrefs.SetString("Tutorial", "End");
 		ResultObj.SetActive(false);
+		//プレイヤーを初期座標に戻す
+		PlayerObj.transform.position = new Vector3(0, 0, 0);
 		MainObj.SetActive(true);
 	}
 }

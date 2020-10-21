@@ -39,7 +39,7 @@ public class Star : MonoBehaviour
 	{
 		Sequence GetStar = DOTween.Sequence()
 					.Append(transform.DOScale(new Vector3(0.1f, 0.1f, 1), 1.0f))
-					.Join(transform.DOMove(new Vector3(-3.5f, 7.5f, 0), 1))
+					.Join(transform.DOMove(new Vector3(0.0f, 7.5f, 0), 1))
 					.OnComplete(() =>
 					{
 						g_StarConCS.Success();

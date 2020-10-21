@@ -53,6 +53,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7184301100745219927}
     m_Modifications:
+    - target: {fileID: 2182695879914099861, guid: 3e30223ccf6c48449a5158610737a227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5511170670242419264, guid: 3e30223ccf6c48449a5158610737a227,
         type: 3}
       propertyPath: m_Name
@@ -197,6 +202,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LeftHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1843091617436356614, guid: 996ade4ec9556b448abd60b141a47754,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -3.0120893
+      objectReference: {fileID: 0}
+    - target: {fileID: 1843091617436356614, guid: 996ade4ec9556b448abd60b141a47754,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 4.7766275
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 996ade4ec9556b448abd60b141a47754, type: 3}
