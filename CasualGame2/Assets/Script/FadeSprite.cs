@@ -18,22 +18,22 @@ public class FadeSprite : MonoBehaviour
 
 	//チュートリアル起動
 
-	// Start is called before the first frame update
-	void Start()
-    {
-		FadeSrc = GetComponent<Image>();
-		Sequence FadeOut = DOTween.Sequence()
-						.OnStart(() =>
-						{
-							g_MainObj.SetActive(false);
-						})
-						.Append(DOTween.ToAlpha(() => FadeSrc.color, color => FadeSrc.color = color, 0, 2.5f))
-						.OnComplete(() =>
-						{
-							//山から宇宙に行ってるアニメーション
-							g_MainObj.SetActive(true);
-						});
-	}
+	//// Start is called before the first frame update
+	//void Start()
+ //   {
+	//	FadeSrc = GetComponent<Image>();
+	//	Sequence FadeOut = DOTween.Sequence()
+	//					.OnStart(() =>
+	//					{
+	//						g_MainObj.SetActive(false);
+	//					})
+	//					.Append(DOTween.ToAlpha(() => FadeSrc.color, color => FadeSrc.color = color, 0, 2.5f))
+	//					.OnComplete(() =>
+	//					{
+	//						//山から宇宙に行ってるアニメーション
+	//						g_MainObj.SetActive(true);
+	//					});
+	//}
 
 	public void FadeIn()
 	{

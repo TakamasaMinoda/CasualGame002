@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
 	//数字オブジェクト
 	[SerializeField, Header("NumCon")] NumCon g_NumConCS;
 
+	[SerializeField, Header("メイン")] GameObject g_MainObj;
+
 	bool tutorialPlayed=false;
 
 	private void Start()
@@ -106,10 +108,10 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		Flick();
-
-		if (SceneManager.GetActiveScene().name == "Main")
+		if (g_MainObj.activeSelf)
 		{
+			Flick();
+
 			if (this.transform.position.y <= -4)
 			{
 				Death();
@@ -126,8 +128,8 @@ public class PlayerController : MonoBehaviour
 							PlayerStatus = "Jump";
 							g_AfterCS.SetActive(false);
 						})
-						.Append(transform.DOScale(new Vector3(1.25f, 1.25f, 1), 1.0f))
-						.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.75f, 1.75f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.5f, 1.5f, 1), 1.0f))
 						.OnComplete(() =>
 						{
 							PlayerStatus = "None";
@@ -147,8 +149,8 @@ public class PlayerController : MonoBehaviour
 							PlayerStatus = "Sliding";
 							g_AfterCS.SetActive(false);
 						})
-						.Append(transform.DOScale(new Vector3(0.75f, 0.75f, 1), 1.0f))
 						.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.5f, 1.5f, 1), 1.0f))
 						.OnComplete(() =>
 						{
 							PlayerStatus = "None";
