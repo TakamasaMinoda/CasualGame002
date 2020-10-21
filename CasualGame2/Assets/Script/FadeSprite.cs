@@ -13,6 +13,7 @@ public class FadeSprite : MonoBehaviour
 	[SerializeField, Header("リザルト")] GameObject g_ResultObj;
 	[SerializeField, Header("チュートリアル")] GameObject g_TutorialObj;
 	[SerializeField, Header("GameOver")] GameObject g_GameOverObj;
+	[SerializeField, Header("オープニング")] GameObject g_OpeningObj;
 
 
 	//チュートリアル起動
@@ -29,6 +30,7 @@ public class FadeSprite : MonoBehaviour
 						.Append(DOTween.ToAlpha(() => FadeSrc.color, color => FadeSrc.color = color, 0, 2.5f))
 						.OnComplete(() =>
 						{
+							//山から宇宙に行ってるアニメーション
 							g_MainObj.SetActive(true);
 						});
 	}

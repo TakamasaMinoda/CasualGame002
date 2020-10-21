@@ -13,7 +13,7 @@ public class Score : MonoBehaviour
     void Awake()
     {
 		TextCS = GetComponent<Text>();
-		TextCS.text= "Score:"+g_score.ToString();
+		TextCS.text= "スコア:" + g_score.ToString();
 	}
 
 	/// <summary>
@@ -23,14 +23,14 @@ public class Score : MonoBehaviour
 	public void AddScore(int ten)
 	{
 		g_score += ten;
-		TextCS.text = "Score:" + g_score.ToString();
+		TextCS.text = "スコア:" + g_score.ToString();
 	}
 
 	public void AnimationResult()
 	{
 		Sequence Anim = DOTween.Sequence()
 			.Append(DOTween.ToAlpha(() => TextCS.color, color => TextCS.color=color, 0, 2f))
-			.Append(this.gameObject.GetComponent<RectTransform>().DOLocalMove(new Vector3(0, 0, 0), 0.1f))
+			.Append(this.gameObject.GetComponent<RectTransform>().DOLocalMove(new Vector3(0, -200, 0), 0.1f))
 			.Append(DOTween.ToAlpha(() => TextCS.color, color => TextCS.color = color, 1,3))
 			;
 	}

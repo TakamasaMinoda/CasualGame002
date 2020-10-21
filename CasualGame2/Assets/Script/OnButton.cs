@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class OnButton : MonoBehaviour
 {
+	[SerializeField] GameObject Common;
+	[SerializeField] GameObject Title;
+
 	public void OnStartButton()
 	{
-		SceneManager.LoadScene("Main");
+		Common.SetActive(true);
+		Title.SetActive(false);
 	}
 }
