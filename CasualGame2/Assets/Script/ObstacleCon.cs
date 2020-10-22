@@ -13,6 +13,8 @@ public class ObstacleCon : MonoBehaviour
 		{
 			ChildCount++;
 		}
+
+		Destroy(gameObject,20);
 	}
 
     // Update is called once per frame

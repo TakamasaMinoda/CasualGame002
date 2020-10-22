@@ -18,6 +18,10 @@ public class Gage : MonoBehaviour
 	[SerializeField, Header("Factory")] GimmikFactory FactoryCS = null;
 	[SerializeField, Header("Crear")] GameObject CrearObj = null;
 
+	[SerializeField, Header("スコア")] GameObject MainScore;
+	[SerializeField, Header("スコア")] GameObject ClearScore;
+	[SerializeField, Header("スコア")] Score g_ScoreCS;
+
 	Image ImageCS;
 
 	void Awake()
@@ -44,7 +48,13 @@ public class Gage : MonoBehaviour
 			FactoryCS = FactoryObj.GetComponent<GimmikFactory>();
 		}
 	}
+	bool bag = false;
 
+	private void Start()
+	{
+		ImageCS.fillAmount = 0;
+		NowDis = 0;
+	}
 	private void Update()
 	{
 		if(PlayerObj.activeSelf)
@@ -55,7 +65,7 @@ public class Gage : MonoBehaviour
 				NowDis += Time.deltaTime;
 				ImageCS.fillAmount = NowDis / GoalDis;
 			}
-			else  //クリア
+			else if(ImageCS.fillAmount==1)  //クリア
 			{
 				//月出現//スクロール停止
 
@@ -99,11 +109,13 @@ public class Gage : MonoBehaviour
 
 				//月生成　//プレイヤーとカメラを上にうごかすかつ月までの道をtrueにする
 				//FactoryCS.CreateMoon();
-				Sequence Ending = DOTween.Sequence()
+				if(!bag)
+				{
+					bag = true;
+					Sequence Ending = DOTween.Sequence()
 						.OnStart(() =>
 						{
 							CrearObj.SetActive(true);
-							//Destroy(gameObject.GetComponent<Image>());
 						})
 						.Append(PlayerObj.transform.DOMove(new Vector3(0f, 21.5f, 0), 7.0f))
 						.Join(CameraObj.transform.DOMove(new Vector3(0f, 21.5f, -10), 7.0f))
@@ -116,17 +128,28 @@ public class Gage : MonoBehaviour
 								//クリア画面へ移行
 								GameObject FadeObj = GameObject.Find("Fade");
 								FadeObj.GetComponent<FadeSprite>().FadeIn();
-								Destroy(this);
+
+								//スコア受け渡し
+								int temp = g_ScoreCS.GetScore();
+								MainScore.SetActive(false);
+								ClearScore.SetActive(true);
+								ClearScore.GetComponent<Text>().text = "スコア:" + temp.ToString();
 							});
 						});
+				}
+				
 			}
 		}
 		else //ゲームオーバー
 		{
 			UnInit();
-
-			GameObject FadeObj = GameObject.Find("Fade");
-			FadeObj.GetComponent<FadeSprite>().FadeInGameOver();
+			if (!bag)
+			{
+				bag = true;
+				GameObject FadeObj = GameObject.Find("Fade");
+				FadeObj.GetComponent<FadeSprite>().FadeInGameOver();
+				MainScore.SetActive(false);
+			}
 		}	
 	}
 

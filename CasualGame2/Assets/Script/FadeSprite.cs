@@ -15,12 +15,11 @@ public class FadeSprite : MonoBehaviour
 	[SerializeField, Header("GameOver")] GameObject g_GameOverObj;
 	[SerializeField, Header("オープニング")] GameObject g_OpeningObj;
 
-
 	//チュートリアル起動
 
 	//// Start is called before the first frame update
 	//void Start()
- //   {
+	//   {
 	//	FadeSrc = GetComponent<Image>();
 	//	Sequence FadeOut = DOTween.Sequence()
 	//					.OnStart(() =>
@@ -38,27 +37,18 @@ public class FadeSprite : MonoBehaviour
 	public void FadeIn()
 	{
 		Sequence FadeIn = DOTween.Sequence()
-						.OnStart(() =>
-						{
-							//スコアアニメーション起動
-							GameObject.Find("ScoreText").GetComponent<Score>().AnimationResult();
-						})
 						.Append(DOTween.ToAlpha(() => FadeSrc.color, color => FadeSrc.color = color, 1, 2.5f))
 						.OnComplete(() =>
 						{
 							g_MainObj.SetActive(false);
 							g_ResultObj.SetActive(true);
+							
 						});
 	}
 
 	public void FadeInGameOver()
 	{
 		Sequence FadeIn = DOTween.Sequence()
-						.OnStart(() =>
-						{
-							//スコアアニメーション起動
-							GameObject.Find("ScoreText").GetComponent<Score>().AnimationResult();
-						})
 						.Append(DOTween.ToAlpha(() => FadeSrc.color, color => FadeSrc.color = color, 1, 2.5f))
 						.OnComplete(() =>
 						{

@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
 							g_AfterCS.SetActive(false);
 						})
 						.Append(transform.DOScale(new Vector3(1.75f, 1.75f, 1), 1.0f))
-						.Append(transform.DOScale(new Vector3(1.5f, 1.5f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.35f, 1.35f, 1), 1.0f))
 						.OnComplete(() =>
 						{
 							PlayerStatus = "None";
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
 							g_AfterCS.SetActive(false);
 						})
 						.Append(transform.DOScale(new Vector3(1.0f, 1.0f, 1), 1.0f))
-						.Append(transform.DOScale(new Vector3(1.5f, 1.5f, 1), 1.0f))
+						.Append(transform.DOScale(new Vector3(1.35f, 1.35f, 1), 1.0f))
 						.OnComplete(() =>
 						{
 							PlayerStatus = "None";

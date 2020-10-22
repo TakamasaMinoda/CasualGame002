@@ -23,7 +23,7 @@ public class OnButton : MonoBehaviour
 							Common.SetActive(true);
 						})
 						.Append(g_PlayerObj.transform.DOMove(new Vector3(0f, 0f, 0), 7.0f))
-						.Join(g_PlayerObj.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 7.0f))
+						.Join(g_PlayerObj.transform.DOScale(new Vector3(1.35f, 1.35f, 1), 7.0f))
 						.Join(g_CameraObj.transform.DOMove(new Vector3(0f, 0f, -10), 7.0f))
 						.OnComplete(() =>
 						{

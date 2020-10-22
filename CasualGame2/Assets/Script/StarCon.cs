@@ -10,6 +10,9 @@ public class StarCon : MonoBehaviour
 	[SerializeField, Header("完璧テキストオブジェクト")] RatingText g_RatingCS;
 	[SerializeField, Header("スコアプログラム")] Score g_ScoreCS = null;
 
+	//星の仕様をどうしたいの？？
+
+
 	private void Awake()
 	{
 		GameObject g_ScoreObj = GameObject.Find("ScoreText");

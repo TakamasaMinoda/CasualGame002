@@ -12,7 +12,7 @@ public class Hand : MonoBehaviour
 
 	private void Start()
 	{
-		transform.DOMoveX(1*g_DirX, 2);
+		transform.DOMoveX(1.2f*g_DirX, 2);
 
 	}
 

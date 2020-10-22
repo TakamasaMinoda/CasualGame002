@@ -7,13 +7,13 @@ public class Star : MonoBehaviour
 {
 	[SerializeField, Header("星の動く速さ")] float speed = 0;
 
-	[SerializeField, Header("親オブジェクト")] GameObject g_ParentObj=null;
+	//[SerializeField, Header("親オブジェクト")] GameObject g_ParentObj=null;
 	[SerializeField, Header("星の親プログラム")] StarCon g_StarConCS = null;
 
 	private void Awake()
 	{
-		g_ParentObj = transform.parent.gameObject;
-		g_StarConCS = g_ParentObj.GetComponent<StarCon>();
+		//g_ParentObj = transform.parent.gameObject;
+		//g_StarConCS = g_ParentObj.GetComponent<StarCon>();
 	}
 
 	private void Update()
